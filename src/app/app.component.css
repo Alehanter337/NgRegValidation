@@ -1,0 +1,16 @@
+.regForm{
+  font-family: Calibri;
+  align-content: center;
+  margin-left: 40%;
+}
+
+p{
+  font-size: 20px;
+}
+
+.submit{
+  font-size: 15px;
+  font-family: Calibri;
+  width: 100px;
+  height: 30px;
+}
