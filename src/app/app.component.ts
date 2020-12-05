@@ -9,11 +9,12 @@ import {AbstractControl, Form, FormArray, FormBuilder, FormControl, FormGroup, V
 })
 export class AppComponent implements OnInit {
 
+  title = 'Forms';
+  form: FormGroup;
+
   constructor(private fb: FormBuilder) {
   }
 
-  title = 'Forms';
-  form: FormGroup;
 
   private static matchPasswords(abstractControl: AbstractControl): ValidatorFn {
     const password: string = abstractControl.get('password').value;
@@ -39,11 +40,10 @@ export class AppComponent implements OnInit {
 
 
   submitRegistration(): void {
-    if (this.form.controls.password.value === this.form.controls.confirmPassword.value) {
+    if (this.form.valid) {
       alert('Registration success');
+    } else {
+      alert('Data is not correct');
     }
-    else { alert('Password is not matching'); }
   }
-
-
 }
