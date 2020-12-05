@@ -2,7 +2,21 @@
   font-family: Calibri;
   align-content: center;
   margin-left: 40%;
+  border-style: inherit;
 }
+span{
+  font-size: 16px;
+}
+
+.form-signin{
+  padding-left: 40%;
+  padding-right: 40%;
+
+}
+h1{
+  padding-top: 12%;
+}
+
 
 p{
   font-size: 20px;

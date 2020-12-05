@@ -1,12 +1,22 @@
-<h1 align="center">Registration form</h1>
+<h1 align="center" class="h3 mb-3 font-weight-normal">Registration form</h1>
 
-<div class="regForm">
-  <p>Your name: <input [formControl]="firstNameControl"></p>
-  <p> Your last name: <input [formControl]="lastNameControl"></p>
-  <p>Your email: <input type="email" [formControl]="emailControl"></p>
-  <p>Your password: <input type="password" [formControl]="passControl"></p>
-  <p>Repeat your password: <input type="password" [formControl]="passSubmit"></p>
-  <button class="submit" (click)="submitRegistration()">Submit</button>
-</div>
-
-
+<body class="text-center">
+<form class="form-signin" [formGroup]="form" (submit)="submitRegistration()">
+  <p><input formControlName="firstName" placeholder="Name" class="form-control"></p>
+  <p><input formControlName="lastName" placeholder="Last Name" class="form-control"></p>
+  <p><input type="email" formControlName="email" placeholder="Email" class="form-control">
+    <span *ngIf="form.controls.email.errors?.required">This field is required</span>
+    <span *ngIf="form.controls.email.errors?.email">This field must be email</span>
+  </p>
+  <p><input pattern="[a-zA-Z0-9!-_]+" type="password" formControlName="password" placeholder="Password" class="form-control">
+    <span *ngIf="form.controls.password.errors?.required">This field is required</span>
+    <span *ngIf="form.controls.password.errors?.minlength">Minimal length is 6</span>
+    <span *ngIf="form.controls.password.errors?.pattern">Password must contain special symbols</span>
+  </p>
+  <p><input type="password" formControlName="confirmPassword" placeholder="Repeat Password" class="form-control">
+    <span *ngIf="form.controls.confirmPassword.errors?.required">This field is required </span>
+    <span *ngIf="form.controls.confirmPassword.errors?.matchPasswords">This field must be match with password></span>
+  </p>
+  <button class="submit" type="submit" class="btn btn-lg btn-primary">Submit</button>
+</form>
+</body>

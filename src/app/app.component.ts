@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Form, FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Observable} from 'rxjs';
+import {AbstractControl, Form, FormArray, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
 
 
 @Component({
@@ -9,29 +8,42 @@ import {Observable} from 'rxjs';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+
+  constructor(private fb: FormBuilder) {
+  }
+
   title = 'Forms';
-  firstNameControl: FormControl;
-  emailControl: FormControl;
-  passControl: FormControl;
-  lastNameControl: FormControl;
-  passSubmit: FormControl;
+  form: FormGroup;
+
+  private static matchPasswords(abstractControl: AbstractControl): ValidatorFn {
+    const password: string = abstractControl.get('password').value;
+    const confirmPassword: string = abstractControl.get('confirmPassword').value;
+    if (password && confirmPassword && password !== confirmPassword) {
+      abstractControl.get('confirmPassword').setErrors({matchPassword: true});
+    } else {
+      return null;
+    }
+  }
+
 
   ngOnInit(): void {
-    this.firstNameControl = new FormControl('Ivan');
-    this.lastNameControl = new FormControl('Ivanov');
-    this.emailControl = new FormControl('', [Validators.required]);
-    this.passControl = new FormControl('', [Validators.required, Validators.minLength(6)]);
-    this.passSubmit = new FormControl('', [Validators.required]);
+    this.form = this.fb.group({
+      firstName: [''],
+      lastName: [''],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6),
+        Validators.pattern('[a-zA-Z0-9]+')]],
+      confirmPassword: ['', [Validators.required]]
+    }, {validator: AppComponent.matchPasswords});
   }
 
+
   submitRegistration(): void {
-    if ((this.passControl.value === this.passSubmit.value) && (this.emailControl.value === true)) {
-      (
-        alert('Success registration')
-      );
+    if (this.form.controls.password.value === this.form.controls.confirmPassword.value) {
+      alert('Registration success');
     }
-    if (this.passControl.value.length < 6) {
-      alert('Password length is less then 6');
-    }
+    else { alert('Password is not matching'); }
   }
+
+
 }
