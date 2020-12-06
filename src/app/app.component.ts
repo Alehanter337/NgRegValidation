@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
   }
 
 
-  private static matchPasswords(abstractControl: AbstractControl): ValidatorFn {
+  private static matchPassword(abstractControl: AbstractControl): ValidatorFn {
     const password: string = abstractControl.get('password').value;
     const confirmPassword: string = abstractControl.get('confirmPassword').value;
     if (password && confirmPassword && password !== confirmPassword) {
@@ -35,7 +35,7 @@ export class AppComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6),
         Validators.pattern('[a-zA-Z0-9]+')]],
       confirmPassword: ['', [Validators.required]]
-    }, {validator: AppComponent.matchPasswords});
+    }, {validator: AppComponent.matchPassword});
   }
 
 
@@ -43,7 +43,10 @@ export class AppComponent implements OnInit {
     if (this.form.valid) {
       alert('Registration success');
     } else {
-      alert('Data is not correct');
+      Object.keys(this.form.controls).forEach((control: string): void => {
+        this.form.controls[control].markAsTouched();
+        this.form.controls[control].updateValueAndValidity();
+      });
     }
   }
 }

@@ -15,7 +15,7 @@
   </p>
   <p><input type="password" formControlName="confirmPassword" placeholder="Repeat Password" class="form-control">
     <span *ngIf="form.controls.confirmPassword.errors?.required">This field is required </span>
-    <span *ngIf="form.controls.confirmPassword.errors?.matchPasswords">This field must be match with password></span>
+    <span *ngIf="form.controls.confirmPassword.errors?.matchPassword">This field must be match with password</span>
   </p>
   <button class="submit" type="submit" class="btn btn-lg btn-primary">Submit</button>
 </form>
